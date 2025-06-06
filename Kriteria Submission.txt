@@ -1,0 +1,199 @@
+<<<<<<< HEAD
+Submission – Proyek Klasifikasi Gambar
+
+Kriteria Submission – Proyek Klasifikasi Gambar 
+Kriteria 1: Bebas Memilih Dataset, Minimal 1000 Gambar
+Anda memiliki kebebasan untuk menggunakan dataset apa pun selama jumlahnya minimal 1000 gambar. Dataset dapat berupa berbagai kategori, seperti hewan, tumbuhan, benda sehari-hari, atau lainnya. Hal ini bertujuan untuk memastikan bahwa data cukup untuk melatih model klasifikasi yang kuat.  
+Kriteria 2: Tidak Boleh Menggunakan Dataset yang Pernah Digunakan
+Dataset yang telah dipakai sebelumnya dalam latihan kelas, seperti Rock, Paper, Scissors dan X-Ray, tidak diperbolehkan. Tujuannya adalah agar proyek tetap beragam dan menantang, serta mendorong eksplorasi dataset yang lebih unik.  
+Kriteria 3: Pembagian Dataset
+Dataset harus dibagi menjadi tiga bagian utama:  
+✔ Train Set – digunakan untuk melatih model  
+✔ Test Set – digunakan untuk menguji performa model  
+✔ Validation Set – digunakan untuk menyesuaikan parameter dan menghindari overfitting 
+Kriteria 4: Model Harus Menggunakan Model Sequential, Conv2D, Pooling Layer  
+Dalam Keras, model Sequential adalah salah satu cara termudah dan paling intuitif untuk membangun arsitektur CNN. Model Sequential memungkinkan Anda menambahkan lapisan (layers) satu per satu, secara berurutan, yang sangat cocok untuk membangun CNN dasar.  
+Kriteria 5: Akurasi pada Training dan Testing Set Minimal Sebesar 85% 
+Target akurasi minimal ini bertujuan untuk memastikan model yang Anda bangun cukup baik dan dapat diandalkan dalam mengenali gambar. Akurasi yang tinggi pada training dan testing set menunjukkan bahwa model berhasil belajar dari data dan mampu melakukan generalisasi dengan baik pada data yang belum pernah dilihat sebelumnya.  
+Kriteria 6: Membuat Plot Terhadap Akurasi dan Loss Model
+Visualisasi akurasi dan loss selama proses training sangat penting untuk memahami bagaimana model belajar. Plot ini akan menunjukkan bagaimana akurasi meningkat dan loss berkurang seiring waktu, serta membantu mendeteksi jika model mengalami overfitting atau underfitting. Dengan plot ini, Anda bisa melihat performa model secara visual dan melakukan penyesuaian jika diperlukan.  
+Kriteria 7: Menyimpan Model ke Dalam Format SavedModel, TF-Lite dan TFJS
+Siswa wajib menyimpan model dalam berbagai format agar dapat digunakan di berbagai platform dan aplikasi:
+- SavedModel adalah format standar TensorFlow yang bisa digunakan untuk deployment di server atau cloud.  
+- TF-Lite adalah format yang dioptimalkan untuk perangkat mobile dan embedded.  
+- TFJS adalah format untuk TensorFlow.js yang memungkinkan model dijalankan di browser dan aplikasi berbasis JavaScript.  
+
+Penilaian:
+Submission Anda akan dinilai oleh reviewer dengan skala **1-5** berdasarkan parameter yang ada.  
+Anda dapat menerapkan beberapa saran untuk mendapatkan nilai tinggi, berikut beberapa tips:  
+✔ Mengimplementasikan Callback untuk meningkatkan efisiensi training.  
+✔ Dataset asli memiliki resolusi gambar yang tidak seragam (tanpa preprocessing).  
+✔ Dataset yang digunakan berisi minimal 10.000 gambar untuk hasil yang lebih akurat.  
+✔ Akurasi pada training set dan testing set minimal 95% agar model memiliki performa optimal.  
+✔ Dataset harus memiliki minimal 3 kelas atau lebih untuk klasifikasi yang lebih kompleks.  
+✔ Melakukan inference menggunakan salah satu model (TF-Lite, TFJS, atau SavedModel).  
+✔ Sertakan bukti inferensi, baik dalam bentuk screenshot atau output pada notebook.
+
+Ketentuan Berkas Submission:
+Beberapa poin yang perlu diperhatikan ketika mengirimkan berkas submission:  
+✔ Menggunakan bahasa pemrograman Python.  
+✔ Mengumpulkan file berikut:  
+   - Notebook pekerjaan Anda dengan format `.ipynb`.  
+   - Model disimpan dalam format SavedModel, TFJS, dan TF-Lite.  
+   - File requirements.txt untuk daftar dependensi yang digunakan.  
+Berikut struktur direktori submission yang disarankan:  
+submission
+├── tfjs_model
+│   ├── group1-shard1of1.bin
+│   └── model.json
+├── tflite
+│   ├── model.tflite
+│   └── label.txt
+├── saved_model
+│   ├── saved_model.pb
+│   └── variables
+├── notebook.ipynb
+├── README.md
+└── requirements.txt
+
+Berikut teks dari gambar yang kamu unggah:
+
+**Tips dan Trik – Proyek Klasifikasi Gambar**  
+Pengantar | Kriteria | Penilaian | Ketentuan Berkas Submission | Lainnya  
+
+Ketika mengerjakan submission, mungkin Anda mengalami kendala. Oleh karena itu, kami mengumpulkan beberapa kendala yang sering ditemui siswa-siswa lain. Agar kendala tersebut tidak terulang kepada Anda, kami telah mengumpulkan tips untuk menanggulanginya.  
+
+Berikut beberapa tips yang dapat Anda gunakan dalam pembuatan submission:  
+1. Disarankan membuat model menggunakan template proyek yang telah disediakan agar proyek terdokumentasi dengan rapi. Template dapat diakses pada tautan yang disediakan.  
+2. Selalu mulai dengan eksplorasi data terlebih dahulu untuk mendapatkan ide mengenai preprocessing dan metode data augmentation yang cocok.  
+3. Gunakan Google Colab dengan T4 GPU atau TPU agar proses pelatihan lebih cepat.  
+4. Pastikan hanya melakukan data augmentation pada data training saja untuk menjaga konsistensi terhadap data testing.  
+5. Anda dapat melihat jumlah citra dan ukuran resolusi gambar menggunakan kode berikut:  
+
+```python
+from PIL import Image
+import os
+
+def print_images_resolution(directory):
+    unique_sizes = set()
+    total_images = 0
+
+    for subdir in os.listdir(directory):
+        subdir_path = os.path.join(directory, subdir)
+        image_files = os.listdir(subdir_path)
+        num_images = len(image_files)
+        print(f"{subdir}: {num_images}")
+        total_images += num_images
+
+        for img_file in image_files:
+            img_path = os.path.join(subdir_path, img_file)
+            with Image.open(img_path) as img:
+                unique_sizes.add(img.size)
+
+    for size in unique_sizes:
+        print(f"{size}")
+        print("----------")
+
+    print(f"\nTotal: {total_images}")
+```
+
+=======
+Submission – Proyek Klasifikasi Gambar
+
+Kriteria Submission – Proyek Klasifikasi Gambar 
+Kriteria 1: Bebas Memilih Dataset, Minimal 1000 Gambar
+Anda memiliki kebebasan untuk menggunakan dataset apa pun selama jumlahnya minimal 1000 gambar. Dataset dapat berupa berbagai kategori, seperti hewan, tumbuhan, benda sehari-hari, atau lainnya. Hal ini bertujuan untuk memastikan bahwa data cukup untuk melatih model klasifikasi yang kuat.  
+Kriteria 2: Tidak Boleh Menggunakan Dataset yang Pernah Digunakan
+Dataset yang telah dipakai sebelumnya dalam latihan kelas, seperti Rock, Paper, Scissors dan X-Ray, tidak diperbolehkan. Tujuannya adalah agar proyek tetap beragam dan menantang, serta mendorong eksplorasi dataset yang lebih unik.  
+Kriteria 3: Pembagian Dataset
+Dataset harus dibagi menjadi tiga bagian utama:  
+✔ Train Set – digunakan untuk melatih model  
+✔ Test Set – digunakan untuk menguji performa model  
+✔ Validation Set – digunakan untuk menyesuaikan parameter dan menghindari overfitting 
+Kriteria 4: Model Harus Menggunakan Model Sequential, Conv2D, Pooling Layer  
+Dalam Keras, model Sequential adalah salah satu cara termudah dan paling intuitif untuk membangun arsitektur CNN. Model Sequential memungkinkan Anda menambahkan lapisan (layers) satu per satu, secara berurutan, yang sangat cocok untuk membangun CNN dasar.  
+Kriteria 5: Akurasi pada Training dan Testing Set Minimal Sebesar 85% 
+Target akurasi minimal ini bertujuan untuk memastikan model yang Anda bangun cukup baik dan dapat diandalkan dalam mengenali gambar. Akurasi yang tinggi pada training dan testing set menunjukkan bahwa model berhasil belajar dari data dan mampu melakukan generalisasi dengan baik pada data yang belum pernah dilihat sebelumnya.  
+Kriteria 6: Membuat Plot Terhadap Akurasi dan Loss Model
+Visualisasi akurasi dan loss selama proses training sangat penting untuk memahami bagaimana model belajar. Plot ini akan menunjukkan bagaimana akurasi meningkat dan loss berkurang seiring waktu, serta membantu mendeteksi jika model mengalami overfitting atau underfitting. Dengan plot ini, Anda bisa melihat performa model secara visual dan melakukan penyesuaian jika diperlukan.  
+Kriteria 7: Menyimpan Model ke Dalam Format SavedModel, TF-Lite dan TFJS
+Siswa wajib menyimpan model dalam berbagai format agar dapat digunakan di berbagai platform dan aplikasi:
+- SavedModel adalah format standar TensorFlow yang bisa digunakan untuk deployment di server atau cloud.  
+- TF-Lite adalah format yang dioptimalkan untuk perangkat mobile dan embedded.  
+- TFJS adalah format untuk TensorFlow.js yang memungkinkan model dijalankan di browser dan aplikasi berbasis JavaScript.  
+
+Penilaian:
+Submission Anda akan dinilai oleh reviewer dengan skala **1-5** berdasarkan parameter yang ada.  
+Anda dapat menerapkan beberapa saran untuk mendapatkan nilai tinggi, berikut beberapa tips:  
+✔ Mengimplementasikan Callback untuk meningkatkan efisiensi training.  
+✔ Dataset asli memiliki resolusi gambar yang tidak seragam (tanpa preprocessing).  
+✔ Dataset yang digunakan berisi minimal 10.000 gambar untuk hasil yang lebih akurat.  
+✔ Akurasi pada training set dan testing set minimal 95% agar model memiliki performa optimal.  
+✔ Dataset harus memiliki minimal 3 kelas atau lebih untuk klasifikasi yang lebih kompleks.  
+✔ Melakukan inference menggunakan salah satu model (TF-Lite, TFJS, atau SavedModel).  
+✔ Sertakan bukti inferensi, baik dalam bentuk screenshot atau output pada notebook.
+
+Ketentuan Berkas Submission:
+Beberapa poin yang perlu diperhatikan ketika mengirimkan berkas submission:  
+✔ Menggunakan bahasa pemrograman Python.  
+✔ Mengumpulkan file berikut:  
+   - Notebook pekerjaan Anda dengan format `.ipynb`.  
+   - Model disimpan dalam format SavedModel, TFJS, dan TF-Lite.  
+   - File requirements.txt untuk daftar dependensi yang digunakan.  
+Berikut struktur direktori submission yang disarankan:  
+submission
+├── tfjs_model
+│   ├── group1-shard1of1.bin
+│   └── model.json
+├── tflite
+│   ├── model.tflite
+│   └── label.txt
+├── saved_model
+│   ├── saved_model.pb
+│   └── variables
+├── notebook.ipynb
+├── README.md
+└── requirements.txt
+
+Berikut teks dari gambar yang kamu unggah:
+
+**Tips dan Trik – Proyek Klasifikasi Gambar**  
+Pengantar | Kriteria | Penilaian | Ketentuan Berkas Submission | Lainnya  
+
+Ketika mengerjakan submission, mungkin Anda mengalami kendala. Oleh karena itu, kami mengumpulkan beberapa kendala yang sering ditemui siswa-siswa lain. Agar kendala tersebut tidak terulang kepada Anda, kami telah mengumpulkan tips untuk menanggulanginya.  
+
+Berikut beberapa tips yang dapat Anda gunakan dalam pembuatan submission:  
+1. Disarankan membuat model menggunakan template proyek yang telah disediakan agar proyek terdokumentasi dengan rapi. Template dapat diakses pada tautan yang disediakan.  
+2. Selalu mulai dengan eksplorasi data terlebih dahulu untuk mendapatkan ide mengenai preprocessing dan metode data augmentation yang cocok.  
+3. Gunakan Google Colab dengan T4 GPU atau TPU agar proses pelatihan lebih cepat.  
+4. Pastikan hanya melakukan data augmentation pada data training saja untuk menjaga konsistensi terhadap data testing.  
+5. Anda dapat melihat jumlah citra dan ukuran resolusi gambar menggunakan kode berikut:  
+
+```python
+from PIL import Image
+import os
+
+def print_images_resolution(directory):
+    unique_sizes = set()
+    total_images = 0
+
+    for subdir in os.listdir(directory):
+        subdir_path = os.path.join(directory, subdir)
+        image_files = os.listdir(subdir_path)
+        num_images = len(image_files)
+        print(f"{subdir}: {num_images}")
+        total_images += num_images
+
+        for img_file in image_files:
+            img_path = os.path.join(subdir_path, img_file)
+            with Image.open(img_path) as img:
+                unique_sizes.add(img.size)
+
+    for size in unique_sizes:
+        print(f"{size}")
+        print("----------")
+
+    print(f"\nTotal: {total_images}")
+```
+
+>>>>>>> 803e793 (penambahan folder)
